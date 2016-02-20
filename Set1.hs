@@ -12,8 +12,22 @@ rands s = fst(rand(s)) : rands(snd(rand(s)))
 
 
 -- 1.2
+randLetter :: Gen Char
 randLetter s = (toLetter(fst(rand(s))), snd(rand(s)))
 
 randLetters s = fst(randLetter(s)) : randLetters(snd(randLetter(s)))
 
 randString3 = take 3 (randLetters(mkSeed 1))
+
+
+-- 1.3
+type Gen t = Seed -> (t, Seed)
+
+randEven :: Gen Integer
+randEven s = (fst(rand(s)) * 2, snd(rand(s)))
+
+randOdd :: Gen Integer
+randOdd s = (fst(randEven s) + 1, snd(randEven s))
+
+randTen :: Gen Integer
+randTen s = (fst(rand(s)) * 10, snd(rand(s)))
