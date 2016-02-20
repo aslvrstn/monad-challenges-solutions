@@ -34,3 +34,16 @@ randTen s = (fst(rand(s)) * 10, snd(rand(s)))
 
 generalA :: (Integer -> a) -> Gen a
 generalA f s = (f(fst(rand(s))), snd(rand(s)))
+
+-- 1.4
+randPair :: Gen (Char, Integer)
+randPair s = ((fst(randLetter s), fst(rand (snd(rand s)))), snd(rand (snd(rand s))))
+
+generalPair :: Gen a -> Gen b -> Gen (a,b)
+generalPair f1 f2 s = ((fst(f1 s), fst(f2(snd(f1 s)))), snd(f2(snd(f1(s)))))
+
+generalB :: Gen a -> Gen b -> (a -> b -> c) -> Gen c
+generalB ga gb f s = ((f (fst(ga s)) (fst(gb(snd(ga s))))), snd(gb(snd(ga(s)))))
+
+generalPair2 :: Gen a -> Gen b -> Gen (a,b)
+generalPair2 f1 f2 s = generalB f1 f2 (,) s
