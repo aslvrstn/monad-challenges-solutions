@@ -31,3 +31,6 @@ randOdd s = (fst(randEven s) + 1, snd(randEven s))
 
 randTen :: Gen Integer
 randTen s = (fst(rand(s)) * 10, snd(rand(s)))
+
+generalA :: (Integer -> a) -> Gen a
+generalA f s = (f(fst(rand(s))), snd(rand(s)))
